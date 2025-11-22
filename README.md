@@ -133,3 +133,9 @@ Lunch de NiceShotは、ランチも含めてゴルフを思い出に残したい
 - データベース：PostgreSQL（Neon）  
 - デプロイ先：Render  
 - 使用予定ライブラリ：Devise / ActiveStorage / Kaminari  
+
+---
+
+## 画面遷移図
+Figma：https://www.figma.com/design/KZCw2TtSChIbWm1x53l5F0/lunch_de_niceshot?node-id=0-1&t=wEQZaPTvfv3V6ZHJ-1
+
