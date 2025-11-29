@@ -128,3 +128,6 @@ Lunch de NiceShotは、ランチも含めてゴルフを思い出に残したい
 
 ## 画面遷移図
 Figma：https://www.figma.com/design/KZCw2TtSChIbWm1x53l5F0/lunch_de_niceshot?node-id=0-1&t=wEQZaPTvfv3V6ZHJ-1
+
+## ER図
+https://gyazo.com/94f2886d4aaf690d3f238ad2ba8479f8
