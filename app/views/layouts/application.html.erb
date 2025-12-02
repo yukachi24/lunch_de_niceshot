@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lunch de NiceShot</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="bg-gray-50">
+
+    <!-- ▼ ヘッダー -->
+    <header class="w-full fixed top-0 left-0 bg-white shadow px-6 py-4 flex justify-between items-center z-50">
+      <!-- 左：アプリ名 -->
+      <%= link_to "Lunch de NiceShot", root_path, class: "text-xl font-bold" %>
+
+      <!-- 右：ログイン中 or 非ログイン -->
+      <nav class="flex space-x-6 text-blue-600">
+        <% if user_signed_in? %>
+          <span><%= current_user.email %> さん</span>
+          <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "hover:underline" %>
+        <% else %>
+          <%= link_to "ログイン", new_user_session_path, class: "hover:underline" %>
+          <%= link_to "新規登録", new_user_registration_path, class: "hover:underline" %>
+        <% end %>
+      </nav>
+    </header>
+    <!-- ▲ ヘッダーここまで -->
+
+    <!-- ▼ メインコンテンツ -->
+    <main class="container mx-auto mt-28 px-5">
+      <%= yield %>
+    </main>
+    <!-- ▲ メイン -->
+
+  </body>
+</html>
