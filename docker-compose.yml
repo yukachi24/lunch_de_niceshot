@@ -9,9 +9,10 @@ services:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: password
     volumes:
-      - postgres_data:/var/lib/postgresql
+      - postgres_data:/var/lib/postgresql/data   # ← ★ここ修正！！
     ports:
       - 5432:5432
+
   web:
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
@@ -29,10 +30,12 @@ services:
     depends_on:
       - db
       - chrome
+
   chrome:
     image: seleniarm/standalone-chromium:latest
     ports:
       - 4444:4444
+
 volumes:
   postgres_data:
   bundle_data:

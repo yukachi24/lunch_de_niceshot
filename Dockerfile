@@ -9,9 +9,9 @@ RUN curl -sL https://deb.nodesource.com/setup_19.x | bash - \
 RUN mkdir /app
 WORKDIR /app
 RUN gem install bundler
-#COPY Gemfile /app/Gemfile
-#COPY Gemfile.lock /app/Gemfile.lock
+COPY Gemfile /app/Gemfile
+COPY Gemfile.lock /app/Gemfile.lock
 #COPY yarn.lock /app/yarn.lock
-#RUN bundle install
+RUN bundle install
 #RUN yarn install
-#COPY . /app
+COPY . /app

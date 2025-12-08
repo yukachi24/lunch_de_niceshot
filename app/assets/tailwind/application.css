@@ -1,1 +1,17 @@
-@import "tailwindcss";
+:root {
+  --brandGreen:  #146C17;
+  --brandOrange: #FF990A;
+  --brandBlue:   #0E7CCC;
+  --brandBeige:  #F7F2E5;
+}
+
+@layer utilities {
+  .text-brandGreen { color: var(--brandGreen); }
+  .text-brandOrange { color: var(--brandOrange); }
+  .text-brandBlue   { color: var(--brandBlue); }
+  .bg-brandBeige    { background-color: var(--brandBeige); }
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
