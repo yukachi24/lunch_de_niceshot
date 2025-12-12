@@ -1,11 +1,68 @@
-<div class="text-center mt-10 space-y-4">
+<div class="max-w-4xl mx-auto px-4">
 
-  <h1 class="text-3xl font-bold text-[--color-brandGreen]">
-    Lunch <span class="text-[--color-brandOrange]">de</span> NiceShot
-  </h1>
+  <!-- サービスヘッダー（そのまま） -->
+  <div class="text-center mt-10 space-y-4">
+    <h1 class="text-3xl font-bold text-[--color-brandGreen]">
+      Lunch <span class="text-[--color-brandOrange]">de</span> NiceShot
+    </h1>
 
-  <p class="text-[--color-brandBlue]">
-    〜“勝ち飯”が、次のナイスショットを呼ぶ〜
-  </p>
+    <p class="text-[--color-brandBlue]">
+      〜“勝ち飯”が、次のナイスショットを呼ぶ〜
+    </p>
+  </div>
+
+  <!-- 勝ち飯ハイライト -->
+  <section class="mt-12 p-4 border rounded-lg bg-[--color-brandBeige]">
+    <h2 class="text-lg font-bold mb-2">🏆 勝ち飯（自己ベスト）</h2>
+
+    <% if @winning_lunches.any? %>
+      <p class="text-sm text-gray-600 mb-3">
+        ベストスコア：<%= @best_score %>
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <% @winning_lunches.each do |lunch| %>
+          <div class="bg-white border rounded p-3">
+            <% if lunch.image.attached? %>
+              <%= image_tag lunch.image, class: "rounded mb-2" %>
+            <% end %>
+            <p class="text-sm">
+              <%= lunch.comment.presence || "コメントなし" %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-sm text-gray-500">
+        まだ自己ベストのラウンドがありません
+      </p>
+    <% end %>
+  </section>
+
+  <!-- 最近のラウンド -->
+  <section class="mt-10">
+    <h2 class="text-lg font-bold mb-3">最近のラウンド</h2>
+
+    <% if @recent_rounds.any? %>
+      <% @recent_rounds.each do |round| %>
+        <div class="border rounded p-3 mb-3">
+          <p class="text-sm">
+            <%= round.date %> / <%= round.course_name %>
+          </p>
+
+          <p class="text-sm text-gray-600">
+            トータルスコア：<%= round.total_score || "-" %>
+          </p>
+
+          <%= link_to "詳細を見る", round_path(round),
+                class: "text-blue-600 underline text-sm" %>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-sm text-gray-500">
+        まだラウンドが登録されていません
+      </p>
+    <% end %>
+  </section>
 
 </div>

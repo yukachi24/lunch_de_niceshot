@@ -1,0 +1,22 @@
+<h2 class="text-xl font-bold mb-4">ランチ登録</h2>
+
+<%= form_with model: @lunch, local: true do |f| %>
+
+  <!-- Round ID -->
+  <%= f.hidden_field :round_id %>
+
+  <!-- 画像アップロード -->
+  <div class="mb-4">
+    <%= f.label :image, "ランチ画像", class: "block font-semibold" %>
+    <%= f.file_field :image, accept: "image/*", class: "mt-1" %>
+  </div>
+
+  <!-- コメント -->
+  <div class="mb-4">
+    <%= f.label :comment, "コメント", class: "block font-semibold" %>
+    <%= f.text_area :comment, rows: 4, class: "mt-1 w-full border rounded" %>
+  </div>
+
+  <%= f.submit "登録する", class: "bg-brandGreen text-white px-4 py-2 rounded" %>
+
+<% end %>

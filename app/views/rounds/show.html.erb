@@ -1,0 +1,70 @@
+<!-- app/views/rounds/show.html.erb -->
+
+<div class="round-show space-y-6 max-w-3xl mx-auto px-4">
+
+  <h1 class="text-2xl font-bold mb-4">ラウンド詳細</h1>
+
+  <!-- 基本情報 -->
+  <section class="bg-white p-4 rounded shadow">
+    <h2 class="text-xl font-semibold mb-2">基本情報</h2>
+    <p>日付：<%= @round.date %></p>
+    <p>ゴルフ場：<%= @round.course_name %></p>
+  </section>
+
+  <!-- スコア情報 -->
+  <section class="bg-white p-4 rounded shadow">
+    <h2 class="text-xl font-semibold mb-2">スコア</h2>
+
+    <% front = @round.scores.find { |s| s.part == "front" } %>
+    <% back  = @round.scores.find { |s| s.part == "back" } %>
+
+    <ul>
+      <li>
+        前半：
+        <%= front&.half_score.presence || "-" %>
+        （パット：<%= front&.half_putts.presence || "-" %>）
+      </li>
+
+      <li>
+        後半：
+        <%= back&.half_score.presence || "-" %>
+        （パット：<%= back&.half_putts.presence || "-" %>）
+      </li>
+
+      <li>
+        トータル：
+        <%= @round.total_score.presence || "-" %>
+        （パット：<%= @round.total_putts.presence || "-" %>）
+      </li>
+    </ul>
+  </section>
+
+  <!-- ランチ情報 -->
+  <section class="bg-white p-4 rounded shadow">
+    <h2 class="text-xl font-semibold mb-4">ランチ情報</h2>
+
+    <% if @round.lunch.present? %>
+      <% lunch = @round.lunch %>
+
+      <% if lunch.image.attached? %>
+        <%= image_tag lunch.image.variant(resize_to_limit: [600, 600]),
+          class: "block max-w-full h-auto rounded shadow mb-3" %>
+      <% end %>
+
+      <p>メモ：<%= lunch.comment.presence || "（コメントはまだありません）" %></p>
+    <% else %>
+      <p>ランチ情報はまだ登録されていません。</p>
+    <% end %>
+
+    <!-- ランチ登録リンク -->
+    <%= link_to "ランチを登録する",
+                new_lunch_path(round_id: @round.id),
+                class: "text-brandGreen underline font-semibold" %>
+  </section>
+
+  <!-- 戻るリンク -->
+  <div class="mt-4">
+    <%= link_to "ラウンド一覧に戻る", rounds_path, class: "text-brandBlue underline" %>
+  </div>
+
+</div>

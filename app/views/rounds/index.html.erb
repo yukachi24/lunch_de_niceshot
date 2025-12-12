@@ -1,0 +1,23 @@
+<h2>ラウンド一覧</h2>
+
+<% if @rounds.any? %>
+  <% @rounds.each do |round| %>
+    <div class="round-item" style="margin-bottom: 20px; padding: 10px; border-bottom: 1px solid #ccc;">
+      <p><strong><%= round.date %></strong></p>
+      <p>ゴルフ場：<%= round.course_name %></p>
+
+      <p>
+        トータルスコア：
+        <% if round.scores.any? %>
+          <%= round.total_score %>
+        <% else %>
+          -
+        <% end %>
+      </p>
+
+      <%= link_to "詳細を見る", round_path(round) %>
+    </div>
+  <% end %>
+<% else %>
+  <p>登録されたラウンドはありません。</p>
+<% end %>

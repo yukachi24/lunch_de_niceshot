@@ -7,7 +7,10 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <!-- ★ 色の CSS 変数（全ページで使える） -->
+    <!-- Tailwind v4 は CSS ファイルを直接 link しない -->
+    <%= javascript_importmap_tags %>
+
+    <!-- ▼ カスタムCSS変数 -->
     <style>
       :root {
         --color-brandGreen: #146C17;
@@ -16,27 +19,19 @@
         --color-brandBeige: #F7F2E5;
       }
 
-      /* タイトル＋サブタイトルを縦並び・左寄せで整える */
       .header-title-area {
         display: flex;
         flex-direction: column;
-        align-items: flex-start;   /* ★ 左寄せ */
+        align-items: flex-start;
         line-height: 1.25;
       }
 
-      /* リンク下線を完全に無効化（全ブラウザ対応） */
       .no-underline {
         text-decoration: none !important;
       }
     </style>
-
-    <!-- Tailwind（ビルド済みCSS） -->
-    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-
-    <%= javascript_importmap_tags %>
   </head>
 
-  <!-- 全体背景 -->
   <body class="min-h-screen" style="background-color: var(--color-brandBeige);">
 
     <!-- ▼ ヘッダー -->
@@ -44,35 +39,29 @@
       class="w-full fixed top-0 left-0 shadow px-6 py-4 flex justify-between items-center z-50"
       style="background-color: var(--color-brandBeige);"
     >
-
-      <!-- ▼ 左：タイトル＋サブタイトル -->
       <div class="header-title-area">
-
-        <!-- タイトル（下線なし） -->
         <%= link_to root_path,
             class: "text-2xl font-bold no-underline",
             style: "color: var(--color-brandGreen);" do %>
-
           Lunch <span style="color: var(--color-brandOrange);">de</span> NiceShot
         <% end %>
 
-        <!-- サブタイトル（水色） -->
         <p style="color: var(--color-brandBlue); font-size: 0.85rem; margin-top: 2px;">
           〜“勝ち飯”が、次のナイスショットを呼ぶ〜
         </p>
       </div>
 
-      <!-- ▼ 右：ログイン/ログアウト -->
       <nav class="flex space-x-6 font-medium">
         <% if user_signed_in? %>
-          <span style="color: var(--color-brandBlue);"><%= current_user.email %> さん</span>
+          <span style="color: var(--color-brandBlue);">
+            <%= current_user.email %> さん
+          </span>
 
           <%= link_to "ログアウト",
               destroy_user_session_path,
               data: { turbo_method: :delete },
               method: :delete,
-              rel: "nofollow",
-              class: "hover:underline cursor-pointer no-underline",
+              class: "hover:underline no-underline",
               style: "color: var(--color-brandBlue);" %>
 
         <% else %>
@@ -87,15 +76,28 @@
                 style: "color: var(--color-brandBlue);" %>
         <% end %>
       </nav>
-
     </header>
-    <!-- ▲ ヘッダーここまで -->
+    <!-- ▲ ヘッダー -->
 
-    <!-- ▼ メインコンテンツ（ヘッダーとの重なり回避） -->
+    <!-- ▼ メイン（ヘッダー高さの余白） -->
     <main class="container mx-auto px-5" style="padding-top: 135px;">
+
+      <!-- ▼ Flash メッセージ（ここが今回の追加ポイント!!） -->
+      <% if notice.present? %>
+        <div class="mb-4 px-4 py-3 rounded border text-green-800 bg-green-100 border-green-300">
+          <%= notice %>
+        </div>
+      <% end %>
+
+      <% if alert.present? %>
+        <div class="mb-4 px-4 py-3 rounded border text-red-800 bg-red-100 border-red-300">
+          <%= alert %>
+        </div>
+      <% end %>
+      <!-- ▲ Flash -->
+
       <%= yield %>
     </main>
-    <!-- ▲ メイン -->
 
   </body>
 </html>

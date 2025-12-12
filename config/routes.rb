@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
-  #get 'homes/top'
   devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
-  root "homes#top"
+  authenticated :user do
+    root "homes#top", as: :authenticated_root
+  end
+
+  unauthenticated do
+    root "devise/sessions#new"
+  end
+
+  resources :rounds
+  resources :lunches, only: [:new, :create]
 end

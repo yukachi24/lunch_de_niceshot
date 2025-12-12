@@ -1,0 +1,47 @@
+<h1 class="text-2xl font-bold mb-4">ラウンド登録</h1>
+
+<%= form_with model: @round, local: true do |f| %>
+
+  <!-- ▼ ラウンド情報 -->
+  <div class="mb-4">
+    <%= f.label :date, "日付", class: "block mb-1" %>
+    <%= f.date_field :date, class: "border p-2 w-full" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :course_name, "ゴルフ場名", class: "block mb-1" %>
+    <%= f.text_field :course_name, class: "border p-2 w-full" %>
+  </div>
+
+  <!-- ▼ スコア情報 -->
+  <h2 class="text-xl font-bold mt-6 mb-4">スコア入力</h2>
+
+  <% @round.scores.each do |score| %>
+    <div class="mb-4 border p-4 rounded bg-white">
+
+      <h3 class="font-bold mb-2">
+        <%= score.part == "front" ? "前半（Front）" : "後半（Back）" %>
+      </h3>
+
+      <%= f.fields_for :scores, score do |sf| %>
+
+        <%= sf.hidden_field :part %>
+
+        <div class="mb-2">
+          <%= sf.label :half_score, "スコア", class: "block mb-1" %>
+          <%= sf.number_field :half_score, class: "border p-2 w-full" %>
+        </div>
+
+        <div class="mb-2">
+          <%= sf.label :half_putts, "パット数", class: "block mb-1" %>
+          <%= sf.number_field :half_putts, class: "border p-2 w-full" %>
+        </div>
+
+      <% end %>
+    </div>
+  <% end %>
+
+  <!-- ▼ 登録ボタン -->
+  <%= f.submit "登録する", class: "bg-green-600 text-white px-4 py-2 rounded" %>
+
+<% end %>
