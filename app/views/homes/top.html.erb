@@ -2,7 +2,7 @@
 
   <!-- マイページ見出し -->
   <div style="margin-top: 40px; margin-bottom: 32px;">
-    <h1 style="font-size: 1.875rem; font-weight: 700; color: var(--color-black);">
+    <h1 style="font-size: 1.875rem; font-weight: 700; color: #111827;">
       マイページ
     </h1>
   </div>
@@ -52,7 +52,7 @@
       </p>
 
       <!-- 🍴 勝ち飯 -->
-      <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 8px;">
+      <h3 style="font-size: 1rem; font-weight: 600; margin: 16px 0 8px;">
         🍴 勝ち飯
       </h3>
 
@@ -65,8 +65,8 @@
             <% end %>
 
             <p style="font-size: 0.875rem; color: #374151;">
-              <strong>ランチコメント:</strong>
-              <%= lunch.comment.presence || "No comment" %>
+              <strong>ランチコメント：</strong>
+              <%= lunch.comment.presence || "コメントはまだありません" %>
             </p>
           </div>
         <% end %>
@@ -78,7 +78,7 @@
 
     <% else %>
       <p style="font-size: 0.875rem; color: #6b7280;">
-        No score has been recorded yet.
+        まだスコアが登録されていません
       </p>
     <% end %>
   </section>
