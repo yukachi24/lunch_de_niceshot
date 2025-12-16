@@ -39,50 +39,63 @@
       class="w-full fixed top-0 left-0 shadow px-6 py-4 flex justify-between items-center z-50"
       style="background-color: var(--color-brandBeige);"
     >
+      <!-- ▼ ロゴ（クリック領域を文字だけに限定） -->
       <div class="header-title-area">
-        <%= link_to root_path,
-            class: "text-2xl font-bold no-underline",
-            style: "color: var(--color-brandGreen);" do %>
-          Lunch <span style="color: var(--color-brandOrange);">de</span> NiceShot
-        <% end %>
+        <div class="flex items-baseline">
+          <%= link_to "Lunch",
+                      root_path,
+                      class: "text-2xl font-bold no-underline",
+                      style: "color: var(--color-brandGreen);" %>
+
+          <span class="text-2xl font-bold mx-1"
+                style="color: var(--color-brandOrange);">
+            de
+          </span>
+
+          <span class="text-2xl font-bold"
+                style="color: var(--color-brandGreen);">
+            NiceShot
+          </span>
+        </div>
 
         <p style="color: var(--color-brandBlue); font-size: 0.85rem; margin-top: 2px;">
           〜“勝ち飯”が、次のナイスショットを呼ぶ〜
         </p>
       </div>
+      <!-- ▲ ロゴ -->
 
-      <nav class="flex space-x-6 font-medium">
+      <!-- ▼ ナビ -->
+      <nav class="flex space-x-6 font-medium items-center relative z-50">
         <% if user_signed_in? %>
           <span style="color: var(--color-brandBlue);">
             <%= current_user.email %> さん
           </span>
 
           <%= link_to "ログアウト",
-              destroy_user_session_path,
-              data: { turbo_method: :delete },
-              method: :delete,
-              class: "hover:underline no-underline",
-              style: "color: var(--color-brandBlue);" %>
-
+                      destroy_user_session_path,
+                      data: { "turbo-method": :delete },
+                      class: "hover:underline no-underline",
+                      style: "color: var(--color-brandBlue);" %>
         <% else %>
           <%= link_to "ログイン",
-                new_user_session_path,
-                class: "hover:underline no-underline",
-                style: "color: var(--color-brandBlue);" %>
+                      new_user_session_path,
+                      class: "hover:underline no-underline",
+                      style: "color: var(--color-brandBlue);" %>
 
           <%= link_to "新規登録",
-                new_user_registration_path,
-                class: "hover:underline no-underline",
-                style: "color: var(--color-brandBlue);" %>
+                      new_user_registration_path,
+                      class: "hover:underline no-underline",
+                      style: "color: var(--color-brandBlue);" %>
         <% end %>
       </nav>
+      <!-- ▲ ナビ -->
     </header>
     <!-- ▲ ヘッダー -->
 
     <!-- ▼ メイン（ヘッダー高さの余白） -->
     <main class="container mx-auto px-5" style="padding-top: 135px;">
 
-      <!-- ▼ Flash メッセージ（ここが今回の追加ポイント!!） -->
+      <!-- ▼ Flash メッセージ -->
       <% if notice.present? %>
         <div class="mb-4 px-4 py-3 rounded border text-green-800 bg-green-100 border-green-300">
           <%= notice %>

@@ -1,23 +1,53 @@
-<h2>ラウンド一覧</h2>
+<h2 class="text-2xl font-bold mb-4">ラウンド一覧</h2>
+
+<!-- ▼ 上部ナビ（TOP / 新規） -->
+<div class="mb-6 flex items-center gap-4">
+  <%= link_to "マイページに戻る",
+              root_path,
+              class: "text-sm text-gray-600 underline hover:opacity-70" %>
+
+  <%= link_to "ラウンドを登録",
+              new_round_path,
+              class: "bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" %>
+</div>
 
 <% if @rounds.any? %>
-  <% @rounds.each do |round| %>
-    <div class="round-item" style="margin-bottom: 20px; padding: 10px; border-bottom: 1px solid #ccc;">
-      <p><strong><%= round.date %></strong></p>
-      <p>ゴルフ場：<%= round.course_name %></p>
+  <div class="space-y-4">
+    <% @rounds.each do |round| %>
+      <div class="round-item bg-white p-4 rounded shadow">
 
-      <p>
-        トータルスコア：
-        <% if round.scores.any? %>
-          <%= round.total_score %>
-        <% else %>
-          -
-        <% end %>
-      </p>
+        <p class="font-semibold text-lg">
+          <%= round.date %>
+        </p>
 
-      <%= link_to "詳細を見る", round_path(round) %>
-    </div>
-  <% end %>
+        <p class="text-gray-700">
+          ゴルフ場：<%= round.course_name %>
+        </p>
+
+        <p class="mt-1">
+          トータルスコア：
+          <% if round.scores.any? %>
+            <span class="font-semibold"><%= round.total_score %></span>
+          <% else %>
+            -
+          <% end %>
+        </p>
+
+        <div class="mt-2">
+          <%= link_to "詳細を見る",
+                      round_path(round),
+                      class: "text-sm text-gray-800 underline hover:opacity-70" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 <% else %>
   <p>登録されたラウンドはありません。</p>
 <% end %>
+
+<!-- ▼ 下部：マイページに戻る（スクロール後も迷わない） -->
+<div class="mt-6">
+  <%= link_to "マイページに戻る",
+              root_path,
+              class: "text-sm text-gray-600 underline hover:opacity-70" %>
+</div>

@@ -6,20 +6,45 @@ class Round < ApplicationRecord
   accepts_nested_attributes_for :scores
   accepts_nested_attributes_for :lunch
 
+  # ------------------------
+  # 基本バリデーション
+  # ------------------------
   validates :date, presence: true
   validates :course_name, presence: true
 
   validate :date_cannot_be_in_the_future
+  validate :front_score_required_if_back_present
 
+  # ------------------------
   # 日付チェック
+  # ------------------------
   def date_cannot_be_in_the_future
     return if date.blank?
+
     if date > Date.today
       errors.add(:date, "は今日以前の日付を入力してください")
     end
   end
 
+  # ------------------------
+  # 前半なしで後半だけ入力された場合のチェック
+  # ------------------------
+  def front_score_required_if_back_present
+    front = scores.find { |s| s.part == "front" }
+    back  = scores.find { |s| s.part == "back" }
+
+    # 後半スコアが未入力ならチェック不要
+    return if back.blank? || back.half_score.blank?
+
+    # 前半スコアが入っていればOK
+    return if front.present? && front.half_score.present?
+
+    errors.add(:base, "前半のスコアを入力してください")
+  end
+
+  # ------------------------
   # 合計スコア
+  # ------------------------
   def total_score
     front = scores.find { |s| s.part == "front" }&.half_score
     back  = scores.find { |s| s.part == "back" }&.half_score
@@ -27,7 +52,9 @@ class Round < ApplicationRecord
     front + back
   end
 
+  # ------------------------
   # 合計パット
+  # ------------------------
   def total_putts
     front = scores.find { |s| s.part == "front" }&.half_putts
     back  = scores.find { |s| s.part == "back" }&.half_putts

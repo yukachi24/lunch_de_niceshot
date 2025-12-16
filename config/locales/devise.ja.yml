@@ -1,0 +1,28 @@
+ja:
+  devise:
+    sessions:
+      signed_in: ""
+      signed_out: ""
+      already_signed_out: ""
+    failure:
+      unauthenticated: "ログインまたは新規登録をしてください。"
+      invalid: "メールアドレスまたはパスワードが正しくありません。"
+    registrations:
+      signed_up: "ユーザー登録が完了しました。"
+
+  activerecord:
+    attributes:
+      round:
+        date: 日付
+        course_name: ゴルフ場名
+      score:
+        half_score: スコア
+        half_putts: パット数
+
+  errors:
+    messages:
+      blank: "を入力してください"
+      taken: "はすでに使用されています。"
+      not_saved:
+        one: "1件のエラーがあります。"
+        other: "%{count}件のエラーがあります。"
