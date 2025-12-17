@@ -1,16 +1,19 @@
-<div class="round-show space-y-6 max-w-3xl mx-auto px-4">
+<div class="round-show max-w-3xl mx-auto px-4">
 
-  <h1 class="text-2xl font-bold mb-4">ラウンド詳細</h1>
+  <h1 class="text-2xl font-bold mb-6">ラウンド詳細</h1>
 
-  <!-- 基本情報 -->
-  <section class="bg-white p-4 rounded shadow">
-    <h2 class="text-xl font-semibold mb-2">基本情報</h2>
-    <p>日付：<%= @round.date %></p>
-    <p>ゴルフ場：<%= @round.course_name %></p>
+  <!-- 日付・ゴルフ場 -->
+  <section class="bg-white p-4 rounded shadow mb-6">
+    <p class="text-lg font-semibold">
+      <%= @round.date.strftime("%Y年%m月%d日") %>
+    </p>
+    <p class="text-gray-700">
+      <%= @round.course_name %>
+    </p>
   </section>
 
   <!-- スコア情報 -->
-  <section class="bg-white p-4 rounded shadow">
+  <section class="bg-white p-4 rounded shadow mb-6">
     <h2 class="text-xl font-semibold mb-2">スコア</h2>
 
     <% front = @round.scores.find { |s| s.part == "front" } %>
@@ -22,13 +25,11 @@
         <%= front&.half_score.presence || "-" %>
         （パット：<%= front&.half_putts.presence || "-" %>）
       </li>
-
       <li>
         後半：
         <%= back&.half_score.presence || "-" %>
         （パット：<%= back&.half_putts.presence || "-" %>）
       </li>
-
       <li class="font-semibold mt-2">
         トータル：
         <%= @round.total_score.presence || "-" %>
@@ -36,16 +37,15 @@
       </li>
     </ul>
 
-    <!-- 編集リンク -->
     <div class="mt-4 text-right">
       <%= link_to "ラウンドを編集する",
                   edit_round_path(@round),
-                  class: "text-gray-800 underline hover:opacity-70" %>
+                  class: "underline text-gray-800 hover:opacity-70" %>
     </div>
   </section>
 
   <!-- ランチ情報 -->
-  <section class="bg-white p-4 rounded shadow">
+  <section class="bg-white p-4 rounded shadow mb-6">
     <h2 class="text-xl font-semibold mb-4">ランチ情報</h2>
 
     <% if @round.lunch.present? %>
@@ -53,15 +53,19 @@
 
       <% if lunch.image.attached? %>
         <%= image_tag lunch.image.variant(resize_to_limit: [600, 600]),
-            class: "block max-w-full h-auto rounded shadow mb-3" %>
+            class: "block w-full rounded shadow mb-3" %>
       <% end %>
 
-      <p>メモ：<%= lunch.comment.presence || "（コメントはまだありません）" %></p>
+      <p>
+        メモ：
+        <%= lunch.comment.presence || "（コメントはまだありません）" %>
+      </p>
     <% else %>
-      <p>ランチ情報はまだ登録されていません。</p>
+      <p class="text-gray-500">
+        ランチ情報はまだ登録されていません。
+      </p>
     <% end %>
 
-    <!-- ランチ登録リンク -->
     <div class="mt-3">
       <%= link_to "ランチを登録する",
                   new_lunch_path(round_id: @round.id),
@@ -69,18 +73,22 @@
     </div>
   </section>
 
-  <!-- ▼ ナビゲーション & 削除 -->
-  <div class="mt-8 flex items-center justify-between">
+  <!-- ★ 強制スペース（2行分以上） -->
+  <div class="h-16"></div>
 
-    <!-- マイページに戻る -->
-    <%= link_to "マイページに戻る", root_path,
-      class: "text-sm text-gray-600 underline hover:text-gray-800" %>
-
-    <!-- ラウンド削除 -->
+  <!-- ラウンド削除 -->
+  <div class="text-right mb-8">
     <%= link_to "このラウンドを削除する",
                 round_path(@round),
                 data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" },
-                class: "text-sm text-red-600 underline hover:text-red-800" %>
+                class: "text-sm text-red-600 underline hover:text-red-800 block" %>
+  </div>
+
+  <!-- マイページに戻る -->
+  <div>
+    <%= link_to "マイページに戻る",
+                root_path,
+                class: "text-sm text-gray-600 underline hover:text-gray-800 block" %>
   </div>
 
 </div>
