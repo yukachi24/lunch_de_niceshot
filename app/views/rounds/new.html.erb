@@ -1,66 +1,76 @@
-<h1 class="text-2xl font-bold mb-4">ラウンド登録</h1>
+<div class="max-w-4xl mx-auto px-4">
 
-<!-- ▼ エラーメッセージ -->
-<% if @round.errors.any? %>
-  <div class="mb-6 p-4 border border-red-400 bg-red-100 text-red-700 rounded">
-    <ul class="list-disc list-inside">
-      <% @round.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+  <h1 class="text-2xl font-bold mb-4">ラウンド登録</h1>
 
-<%= form_with model: @round, local: true do |f| %>
-
-  <!-- ▼ ラウンド基本情報 -->
-  <div class="mb-4">
-    <%= f.label :date, "日付", class: "block mb-1" %>
-    <%= f.date_field :date, class: "border p-2 w-full" %>
-  </div>
-
-  <div class="mb-4">
-    <%= f.label :course_name, "ゴルフ場名", class: "block mb-1" %>
-    <%= f.text_field :course_name, class: "border p-2 w-full" %>
-  </div>
-
-  <!-- ▼ スコア入力 -->
-  <h2 class="text-xl font-bold mt-6 mb-4">スコア入力</h2>
-
-  <% @round.scores.each_with_index do |score, i| %>
-    <div class="mb-4 border p-4 rounded bg-white">
-
-      <h3 class="font-bold mb-2">
-        <%= i == 0 ? "前半（Front）" : "後半（Back）" %>
-      </h3>
-
-      <%= f.fields_for :scores, score do |sf| %>
-
-        <!-- ▼ 更新対象を識別 -->
-        <%= sf.hidden_field :id if score.persisted? %>
-        <%= sf.hidden_field :part %>
-
-        <div class="mb-2">
-          <%= sf.label :half_score, "スコア", class: "block mb-1" %>
-          <%= sf.number_field :half_score, class: "border p-2 w-full" %>
-        </div>
-
-        <div class="mb-2">
-          <%= sf.label :half_putts, "パット数", class: "block mb-1" %>
-          <%= sf.number_field :half_putts, class: "border p-2 w-full" %>
-        </div>
-
-      <% end %>
+  <!-- ▼ エラーメッセージ -->
+  <% if @round.errors.any? %>
+    <div class="mb-6 p-4 border border-red-400 bg-red-100 text-red-700 rounded">
+      <ul class="list-disc list-inside">
+        <% @round.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
 
-  <!-- ▼ ボタンエリア -->
-  <div class="mt-6 flex items-center justify-between">
-    <%= f.submit "登録する",
-          class: "bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" %>
+  <%= form_with model: @round, local: true do |f| %>
 
-    <%= link_to "マイページに戻る", root_path,
-      class: "text-sm text-gray-600 underline hover:text-gray-800" %>
+    <!-- ▼ ラウンド基本情報 -->
+    <div class="mb-4">
+      <%= f.label :date, "日付", class: "block mb-1" %>
+      <%= f.date_field :date, class: "border p-2 w-full" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :course_name, "ゴルフ場名", class: "block mb-1" %>
+      <%= f.text_field :course_name, class: "border p-2 w-full" %>
+    </div>
+
+    <!-- ▼ スコア入力 -->
+    <h2 class="text-xl font-bold mt-6 mb-4">スコア入力</h2>
+
+    <% @round.scores.each_with_index do |score, i| %>
+      <div class="mb-4 border p-4 rounded bg-white">
+
+        <h3 class="font-bold mb-2">
+          <%= i == 0 ? "前半（Front）" : "後半（Back）" %>
+        </h3>
+
+        <%= f.fields_for :scores, score do |sf| %>
+          <!-- ▼ 更新対象を識別 -->
+          <%= sf.hidden_field :id if score.persisted? %>
+          <%= sf.hidden_field :part %>
+
+          <div class="mb-2">
+            <%= sf.label :half_score, "スコア", class: "block mb-1" %>
+            <%= sf.number_field :half_score, class: "border p-2 w-full" %>
+          </div>
+
+          <div class="mb-2">
+            <%= sf.label :half_putts, "パット数", class: "block mb-1" %>
+            <%= sf.number_field :half_putts, class: "border p-2 w-full" %>
+          </div>
+        <% end %>
+
+      </div>
+    <% end %>
+
+ <!-- ▼ ボタンエリア -->
+<div style="margin-top: 48px; margin-bottom: 64px;">
+
+  <div style="margin-bottom: 24px;">
+    <%= f.submit "登録する",
+          class: "bg-green-600 text-white px-4 py-2 rounded w-full" %>
   </div>
 
-<% end %>
+  <div>
+    <%= link_to "マイページに戻る",
+          root_path,
+          class: "text-sm text-gray-600 underline" %>
+  </div>
+
+</div>
+
+  <% end %>
+
+</div>

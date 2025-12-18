@@ -1,0 +1,18 @@
+<%= form_with model: lunch, local: true do |f| %>
+
+  <div class="mb-4">
+    <%= f.label :image, "写真" %>
+    <%= f.file_field :image, class: "block mt-1" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :comment, "コメント" %>
+    <%= f.text_area :comment,
+        rows: 3,
+        class: "w-full border rounded p-2" %>
+  </div>
+
+  <%= f.submit submit_label,
+      class: "px-4 py-2 bg-gray-800 text-white rounded hover:opacity-80" %>
+
+<% end %>

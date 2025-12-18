@@ -1,52 +1,65 @@
-<h2 class="text-2xl font-bold mb-4">ラウンド一覧</h2>
+<h2 class="text-2xl font-bold mb-6">ラウンド一覧</h2>
 
-<!-- ▼ 上部ナビ（TOP / 新規） -->
-<div class="mb-6 flex items-center gap-4">
+<!-- ▼ 上部ナビ -->
+<div class="mb-6">
   <%= link_to "マイページに戻る",
               root_path,
               class: "text-sm text-gray-600 underline hover:opacity-70" %>
-
-  <%= link_to "ラウンドを登録",
-              new_round_path,
-              class: "bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" %>
 </div>
 
 <% if @rounds.any? %>
   <div class="space-y-4">
+
     <% @rounds.each do |round| %>
-      <div class="round-item bg-white p-4 rounded shadow">
+      <div class="bg-white p-4 rounded shadow-sm border border-gray-200">
 
-        <p class="font-semibold text-lg">
-          <%= round.date %>
+        <!-- 日付（主） -->
+        <p
+          style="
+            font-size: 22px;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 12px;
+          "
+        >
+          <%= round.date.strftime('%Y年%m月%d日') %>
         </p>
 
-        <p class="text-gray-700">
-          ゴルフ場：<%= round.course_name %>
-        </p>
+        <!-- 従情報（インデント） -->
+        <div style="margin-left: 32px;">
 
-        <p class="mt-1">
-          トータルスコア：
-          <% if round.scores.any? %>
-            <span class="font-semibold"><%= round.total_score %></span>
-          <% else %>
-            -
-          <% end %>
-        </p>
+          <p class="text-gray-700">
+            ゴルフ場：<%= round.course_name %>
+          </p>
 
-        <div class="mt-2">
-          <%= link_to "詳細を見る",
-                      round_path(round),
-                      class: "text-sm text-gray-800 underline hover:opacity-70" %>
+          <p class="mt-1">
+            トータルスコア：
+            <% if round.scores.any? %>
+              <span class="font-semibold"><%= round.total_score %></span>
+            <% else %>
+              -
+            <% end %>
+          </p>
+
+          <div class="mt-2">
+            <%= link_to "詳細を見る",
+                        round_path(round),
+                        class: "text-sm text-gray-800 underline hover:opacity-70" %>
+          </div>
+
         </div>
       </div>
     <% end %>
+
   </div>
 <% else %>
-  <p>登録されたラウンドはありません。</p>
+  <p class="text-gray-500">
+    登録されたラウンドはありません。
+  </p>
 <% end %>
 
-<!-- ▼ 下部：マイページに戻る（スクロール後も迷わない） -->
-<div class="mt-6">
+<!-- ▼ 下部ナビ -->
+<div style="margin-top: 48px; margin-bottom: 64px;">
   <%= link_to "マイページに戻る",
               root_path,
               class: "text-sm text-gray-600 underline hover:opacity-70" %>

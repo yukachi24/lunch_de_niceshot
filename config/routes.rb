@@ -12,5 +12,5 @@ Rails.application.routes.draw do
   end
 
   resources :rounds
-  resources :lunches, only: [:new, :create]
+  resources :lunches, only: [:new, :create, :edit, :update]
 end

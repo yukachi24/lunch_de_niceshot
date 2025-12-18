@@ -1,22 +1,49 @@
-<h2 class="text-xl font-bold mb-4">ランチ登録</h2>
+<div class="max-w-3xl mx-auto px-4">
 
-<%= form_with model: @lunch, local: true do |f| %>
+  <h2 class="text-xl font-bold mb-6">ランチ登録</h2>
 
-  <!-- Round ID -->
-  <%= f.hidden_field :round_id %>
+  <%= form_with model: @lunch,
+      url: lunches_path(round_id: @round.id),
+      local: true do |f| %>
 
-  <!-- 画像アップロード -->
-  <div class="mb-4">
-    <%= f.label :image, "ランチ画像", class: "block font-semibold" %>
-    <%= f.file_field :image, accept: "image/*", class: "mt-1" %>
-  </div>
+    <!-- Round ID -->
+    <%= f.hidden_field :round_id %>
 
-  <!-- コメント -->
-  <div class="mb-4">
-    <%= f.label :comment, "コメント", class: "block font-semibold" %>
-    <%= f.text_area :comment, rows: 4, class: "mt-1 w-full border rounded" %>
-  </div>
+    <!-- 画像アップロード -->
+    <div style="margin-bottom: 24px;">
+      <%= f.label :image, "ランチ画像",
+            style: "display:block; font-weight:600; margin-bottom:8px;" %>
 
-  <%= f.submit "登録する", class: "bg-brandGreen text-white px-4 py-2 rounded" %>
+      <%= f.file_field :image,
+            accept: "image/*" %>
+    </div>
 
-<% end %>
+    <!-- コメント -->
+    <div style="margin-bottom: 24px;">
+      <%= f.label :comment, "コメント",
+            style: "display:block; font-weight:600; margin-bottom:8px;" %>
+
+      <%= f.text_area :comment,
+            rows: 4,
+            class: "w-full border rounded p-2" %>
+    </div>
+
+    <!-- ▼ ボタンエリア（他画面と統一） -->
+    <div style="margin-top: 48px; margin-bottom: 64px;">
+
+      <div style="margin-bottom: 24px;">
+        <%= f.submit "登録する",
+              class: "bg-green-600 text-white px-4 py-2 rounded w-full" %>
+      </div>
+
+      <div>
+        <%= link_to "ラウンド詳細に戻る",
+              round_path(params[:round_id]),
+              class: "text-sm text-gray-600 underline" %>
+      </div>
+
+    </div>
+
+  <% end %>
+
+</div>
