@@ -7,14 +7,14 @@
     </h1>
   </div>
 
-  <!-- 🏆 ベストスコア（勝ち飯を内包・左寄せ・囲いなし） -->
+  <!-- 🏆 ベストスコア -->
   <section style="margin-bottom: 32px;">
     <h2 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 4px;">
       🏆 ベストスコア
     </h2>
 
     <% if @best_round.present? %>
-      <!-- スコア + Putts -->
+      <!-- スコア + Putts（代表ラウンド） -->
       <p
         style="
           font-size: 4rem;
@@ -38,7 +38,7 @@
         </span>
       </p>
 
-      <!-- 日付・ゴルフ場 -->
+      <!-- 代表ラウンド情報 -->
       <p
         style="
           font-size: 0.875rem;
@@ -58,7 +58,14 @@
 
       <% if @winning_lunches.any? %>
         <% @winning_lunches.each do |lunch| %>
-          <div style="margin-bottom: 12px;">
+          <div style="margin-bottom: 20px;">
+            <!-- ランチに紐づくラウンド情報 -->
+            <p style="font-size: 0.75rem; color: #6b7280; margin-bottom: 4px;">
+              <%= lunch.round.date.strftime("%Y年%m月%d日") %>
+              ／
+              <%= lunch.round.course_name %>
+            </p>
+
             <% if lunch.image.attached? %>
               <%= image_tag lunch.image.variant(resize_to_fill: [256, 160]),
                     style: "display:block; margin-bottom:8px; border-radius:8px;" %>
@@ -78,12 +85,12 @@
 
     <% else %>
       <p style="font-size: 0.875rem; color: #6b7280;">
-        まだスコアが登録されていません 
+        まだスコアが登録されていません
       </p>
     <% end %>
   </section>
 
-  <!-- → このラウンドを見る -->
+  <!-- → このラウンドを見る（代表ラウンド） -->
   <% if @best_round.present? %>
     <div style="margin-bottom: 24px;">
       <%= link_to "→ このラウンドを見る",
