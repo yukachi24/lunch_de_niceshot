@@ -30,7 +30,7 @@ class RoundsController < ApplicationController
   end
 
   def edit
-    # 既存データを表示するだけ
+    # 表示のみ
   end
 
   def update
@@ -42,6 +42,13 @@ class RoundsController < ApplicationController
   end
 
   def destroy
+    # ★ Render本番での外部キー制約対策
+    # round_id に紐づく Lunch が複数存在しても必ず削除する
+    Lunch.where(round_id: @round.id).destroy_all
+
+    # scores は dependent: :destroy で消えるが、明示しても安全
+    # Score.where(round_id: @round.id).destroy_all
+
     @round.destroy
     redirect_to root_path, notice: "ラウンドを削除しました"
   end
