@@ -41,10 +41,19 @@
             <% end %>
           </p>
 
-          <div class="mt-2">
+          <!-- 操作 -->
+          <div class="mt-2 flex items-center gap-4">
             <%= link_to "詳細を見る",
                         round_path(round),
                         class: "text-sm text-gray-800 underline hover:opacity-70" %>
+
+            <!-- 🔥 Render本番で確実に動く削除 -->
+            <%= button_to "削除",
+                          round_path(round),
+                          method: :delete,
+                          data: { confirm: "このラウンドを削除しますか？" },
+                          form: { class: "inline" },
+                          class: "text-sm text-red-600 underline hover:opacity-70 bg-transparent border-none p-0" %>
           </div>
 
         </div>
