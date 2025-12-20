@@ -9,95 +9,87 @@
 
   <!-- 🏆 ベストスコア -->
   <section style="margin-bottom: 32px;">
-    <h2 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 4px;">
+    <h2 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 12px;">
       🏆 ベストスコア
     </h2>
 
-    <% if @best_round.present? %>
-      <!-- スコア + Putts（代表ラウンド） -->
-      <p
-        style="
-          font-size: 4rem;
-          font-weight: 800;
-          color: var(--color-brandGreen);
-          line-height: 1;
-          margin: 0;
-        "
-      >
-        <%= @best_score %>
-        <span
-          style="
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--color-brandGreen);
-            margin-left: 8px;
-            vertical-align: middle;
-          "
-        >
-          (Putts: <%= @best_round.total_putts %>)
-        </span>
-      </p>
+    <% if @best_rounds.present? %>
+      <% @best_rounds.each do |round| %>
+        <div style="margin-bottom: 32px;">
 
-      <!-- 代表ラウンド情報 -->
-      <p
-        style="
-          font-size: 0.875rem;
-          color: #6b7280;
-          line-height: 1.3;
-          margin-top: 4px;
-        "
-      >
-        <%= @best_round.date.strftime("%Y年%m月%d日") %><br>
-        <%= @best_round.course_name %>
-      </p>
+          <!-- スコア（Putts） -->
+          <p
+            style="
+              font-size: 3rem;
+              font-weight: 800;
+              color: var(--color-brandGreen);
+              line-height: 1;
+              margin: 0;
+            "
+          >
+            <%= round.total_score %>
+            <span
+              style="
+                font-size: 1.4rem;
+                font-weight: 600;
+                color: var(--color-brandGreen);
+                margin-left: 8px;
+                vertical-align: middle;
+              "
+            >
+              (Putts: <%= round.total_putts %>)
+            </span>
+          </p>
 
-      <!-- 🍴 勝ち飯 -->
-      <h3 style="font-size: 1rem; font-weight: 600; margin: 16px 0 8px;">
-        🍴 勝ち飯
-      </h3>
+          <!-- 日付・ゴルフ場 -->
+          <p
+            style="
+              font-size: 0.875rem;
+              color: #6b7280;
+              line-height: 1.3;
+              margin-top: 4px;
+            "
+          >
+            <%= round.date.strftime("%Y年%m月%d日") %><br>
+            <%= round.course_name %>
+          </p>
 
-      <% if @winning_lunches.any? %>
-        <% @winning_lunches.each do |lunch| %>
-          <div style="margin-bottom: 20px;">
-            <!-- ランチに紐づくラウンド情報 -->
-            <p style="font-size: 0.75rem; color: #6b7280; margin-bottom: 4px;">
-              <%= lunch.round.date.strftime("%Y年%m月%d日") %>
-              ／
-              <%= lunch.round.course_name %>
-            </p>
+          <!-- 🍴 勝ち飯 -->
+          <h3 style="font-size: 0.95rem; font-weight: 600; margin: 12px 0 6px;">
+            🍴 勝ち飯
+          </h3>
 
-            <% if lunch.image.attached? %>
-              <%= image_tag lunch.image.variant(resize_to_fill: [256, 160]),
-                    style: "display:block; margin-bottom:8px; border-radius:8px;" %>
+          <% if round.lunch.present? %>
+            <% if round.lunch.image.attached? %>
+              <%= image_tag round.lunch.image.variant(resize_to_fill: [256, 160]),
+                            style: "display:block; margin-bottom:8px; border-radius:8px;" %>
             <% end %>
 
             <p style="font-size: 0.875rem; color: #374151;">
               <strong>ランチコメント：</strong>
-              <%= lunch.comment.presence || "コメントはまだありません" %>
+              <%= round.lunch.comment.presence || "コメントはまだありません" %>
             </p>
-          </div>
-        <% end %>
-      <% else %>
-        <p style="font-size: 0.875rem; color: #6b7280;">
-          勝ち飯はまだ登録されていません
-        </p>
-      <% end %>
+          <% else %>
+            <p style="font-size: 0.875rem; color: #6b7280;">
+              勝ち飯はまだ登録されていません
+            </p>
+          <% end %>
 
+          <!-- → このラウンドを見る -->
+          <div style="margin-top: 8px;">
+            <%= link_to "→ このラウンドを見る",
+                        round_path(round),
+                        style: "font-size:0.75rem; color:#2563eb; text-decoration:underline;" %>
+          </div>
+
+        </div>
+      <% end %>
     <% else %>
       <p style="font-size: 0.875rem; color: #6b7280;">
         まだスコアが登録されていません
       </p>
     <% end %>
   </section>
-
-  <!-- → このラウンドを見る（代表ラウンド） -->
-  <% if @best_round.present? %>
-    <div style="margin-bottom: 24px;">
-      <%= link_to "→ このラウンドを見る",
-                  round_path(@best_round),
-                  style: "font-size:0.875rem; color:#2563eb; text-decoration:underline;" %>
-    </div>
-  <% end %>
 
   <!-- 📋 ラウンド一覧 -->
   <div style="margin-bottom: 24px;">
@@ -110,12 +102,7 @@
   <div style="margin-top: 48px; margin-bottom: 64px;">
     <%= link_to "⛳ ラウンド開始",
                 new_round_path,
-                style: "
-                  font-size: 1.6rem;
-                  font-weight: 700;
-                  color: #111827;
-                  text-decoration: underline;
-                " %>
+                style: "font-size:1.6rem; font-weight:700; color:#111827; text-decoration:underline;" %>
   </div>
 
 </div>
